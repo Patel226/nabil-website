@@ -1,187 +1,221 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Nabil Pro Website</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nabil Ultimate Pro</title>
+<style>
+/* Reset */
+*{margin:0; padding:0; box-sizing:border-box;}
+body{font-family:Arial, sans-serif; background:linear-gradient(120deg,#1a0a2b,#0ab7ff,#ff0099); color:white; scroll-behavior:smooth; overflow-x:hidden; transition:background 0.5s,color 0.5s;}
+body.light{background:#fff; color:#111;}
+body.light .navbar{background:#eee;}
+body.light .btn{background:#ff0099; color:white;}
+body.light .btn:hover{background:#0ab7ff; color:white;}
+body.light .project-card{background:#ddd; color:#111;}
+body.light .project-card:hover{background:#ff0099; color:white;}
+body.light .bar span{background:#ff0099;}
+/* Navbar */
+.navbar{display:flex; justify-content:space-between; padding:20px 50px; background:#000; position:sticky; top:0; z-index:100; transition:0.5s;}
+.navbar h2{color:#ff0099;}
+.nav-links a{margin-left:20px; text-decoration:none; color:white; transition:0.3s; position:relative;}
+.nav-links a:hover{color:#ff0099;}
+.nav-links a::after{content:""; position:absolute; left:0; bottom:-5px; width:0; height:2px; background:#ff0099; transition:0.3s;}
+.nav-links a:hover::after{width:100%;}
+.mode-toggle{cursor:pointer; margin-left:20px; padding:5px 10px; border:1px solid white; border-radius:5px;}
+/* Hero */
+.hero{text-align:center; padding:100px 20px; position:relative; overflow:hidden;}
+.hero h1{font-size:50px; background:linear-gradient(90deg,#ff0099,#0ab7ff,#ffff00); -webkit-background-clip:text; color:transparent; animation:glowText 2s ease-in-out infinite alternate;}
+.hero p{color:#ffff00; font-size:20px; margin:20px 0;}
+.btn{background:#ff0099; padding:12px 25px; border-radius:10px; color:white; text-decoration:none; transition:0.3s; position:relative; z-index:2;}
+.btn:hover{background:#0ab7ff; color:white; transform:scale(1.1);}
+.float-glow{position:absolute; width:30px; height:30px; border-radius:50%; background:#ff0099; animation:float 6s infinite ease-in-out; opacity:0.6; z-index:1;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial;
-            background: linear-gradient(to right, black, #111);
-            color: white;
-        }
+/* Sparks */
+.spark{position:absolute; width:4px; height:4px; background:#ffff00; border-radius:50%; animation:sparkMove 3s linear infinite; opacity:0.8;}
+@keyframes sparkMove{0%{transform:translateY(0) translateX(0) scale(1);}100%{transform:translateY(-500px) translateX(300px) scale(0);}}
 
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 30px;
-            background: #000;
-        }
+/* About */
+.about{text-align:center; padding:80px 20px; opacity:0; transition:1s; position:relative;}
+.about-content{display:flex; justify-content:center; align-items:center; flex-wrap:wrap;}
+.profile-pic{width:250px; border-radius:15px; border:3px solid white; margin:20px; box-shadow:0 0 25px #ff0099,0 0 50px #0ab7ff; transition: transform 0.8s ease, box-shadow 0.5s ease; animation: roll 20s linear infinite;}
+.profile-pic:hover{transform: rotateY(360deg) scale(1.1); box-shadow:0 0 35px #ff00ff,0 0 70px #00ffff;}
+@keyframes roll{0%{transform:rotateY(0deg);}100%{transform:rotateY(360deg);}}
 
-        .navbar a {
-            color: white;
-            margin-left: 15px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
+/* Skills */
+.skills{text-align:center; padding:80px 20px; opacity:0; transition:1s;}
+.skill-bars{max-width:700px; margin:auto;}
+.skill{margin:20px 0; position:relative;}
+.skill p{margin-bottom:5px;}
+.skill .tooltip{position:absolute; right:-50px; top:0; background:#333; padding:5px 10px; border-radius:5px; opacity:0; transition:0.3s;}
+.skill:hover .tooltip{opacity:1;}
+.bar{width:100%; background:#222; border-radius:20px; overflow:hidden;}
+.bar span{display:block; height:20px; background: linear-gradient(90deg,#ff0099,#0ab7ff,#ffff00); width:0; transition:1s;}
 
-        .navbar a:hover {
-            color: red;
-        }
+/* Portfolio */
+.portfolio{text-align:center; padding:80px 20px; opacity:0; transition:1s;}
+.projects{display:flex; justify-content:center; flex-wrap:wrap;}
+.project-card{background:#222; padding:40px; margin:20px; border-radius:15px; transition:0.3s; width:200px; cursor:pointer; position:relative;}
+.project-card:hover{transform:scale(1.1); background:#ff0099; color:white;}
+.project-card::after{content:"View Project"; position:absolute; bottom:10px; left:50%; transform:translateX(-50%); color:white; opacity:0; transition:0.3s;}
+.project-card:hover::after{opacity:1;}
 
-        /* Hero */
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            animation: fadeIn 2s ease-in;
-        }
+/* Buttons sparkle */
+.btn:hover::before{content:"✨"; position:absolute; left:-5px; top:-5px; font-size:20px; animation:btnSpark 0.5s ease-in-out infinite;}
+@keyframes btnSpark{0%,100%{opacity:1;}50%{opacity:0;}}
 
-        .hero h1 {
-            color: red;
-            font-size: 45px;
-            animation: slideDown 1s ease;
-        }
+/* Contact */
+.contact{text-align:center; padding:80px 20px; opacity:0; transition:1s;}
+.contact form{display:flex; flex-direction:column; max-width:500px; margin:auto;}
+.contact input,.contact textarea,.contact button{margin:10px 0; padding:10px; border-radius:10px; border:none;}
+.contact button{background:#ff0099; color:white; cursor:pointer; transition:0.3s; position:relative;}
+.contact button:hover{background:#0ab7ff; color:white; transform:scale(1.1);}
+.contact button:hover::before{content:"✨"; position:absolute; left:-5px; top:-5px; font-size:20px; animation:btnSpark 0.5s ease-in-out infinite;}
 
-        .hero p {
-            color: yellow;
-        }
+/* Hero glow animation */
+@keyframes glowText{0%{text-shadow:0 0 5px #ff0099,0 0 10px #0ab7ff;}100%{text-shadow:0 0 20px #ff0099,0 0 40px #0ab7ff;}}
 
-        /* Button */
-        .btn {
-            background: red;
-            padding: 10px 20px;
-            color: white;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            background: white;
-            color: black;
-            transform: scale(1.1);
-        }
-
-        /* Sections */
-        .section {
-            padding: 50px;
-            text-align: center;
-        }
-
-        .card {
-            background: #222;
-            margin: 10px;
-            padding: 20px;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: scale(1.1);
-        }
-
-        /* Flex */
-        .flex {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* Image */
-        img {
-            border-radius: 50%;
-            border: 3px solid white;
-            margin: 20px 0;
-            transition: 0.3s;
-        }
-
-        img:hover {
-            transform: scale(1.1);
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Responsive */
-        @media (max-width:600px) {
-            .navbar {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-    </style>
+/* Responsive */
+@media(max-width:768px){.about-content{flex-direction:column;}.projects{flex-direction:column;align-items:center;}}
+</style>
 </head>
-
 <body>
 
-    <!-- Navbar -->
-    <div class="navbar">
-        <h2>Nabil 😎</h2>
-        <div>
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Skills</a>
-            <a href="#">Contact</a>
-        </div>
+<!-- Navbar -->
+<nav class="navbar">
+    <h2>Nabil 😎</h2>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
+        <span class="mode-toggle" id="modeToggle">🌙</span>
     </div>
+</nav>
 
-    <!-- Hero -->
-    <div class="hero">
-        <h1>I am Nabil 🔥</h1>
-        <p>Future Web Designer 💻</p>
-        <a href="#" class="btn" id="hireBtn">Hire Me</a>
+<!-- Hero -->
+<section class="hero" id="home">
+    <h1 id="heroText"></h1>
+    <p>Future Web Designer & Developer 💻</p>
+    <a href="#contact" class="btn" id="hireBtn">Hire Me</a>
+    <div class="float-glow"></div>
+    <div class="float-glow"></div>
+    <div class="float-glow"></div>
+    <div class="float-glow"></div>
+    <div class="spark" style="top:80%; left:20%;"></div>
+    <div class="spark" style="top:90%; left:50%;"></div>
+    <div class="spark" style="top:85%; left:70%;"></div>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+    <h2>About Me</h2>
+    <div class="about-content">
+        <img src="https://bmwindia.co.in/offers/m5/images/header-mob.jpg" alt="BMW M5" class="profile-pic">
+        <p>Hello! I love web designing and creating next-level websites. My goal is to become a pro and craft stunning digital experiences.</p>
     </div>
+</section>
 
-    <!-- Image -->
-    <div class="section">
-        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39" width="200">
+<!-- Skills -->
+<section class="skills" id="skills">
+    <h2>My Skills</h2>
+    <div class="skill-bars">
+        <div class="skill"><p>HTML</p><span class="tooltip">95%</span><div class="bar"><span style="width:95%"></span></div></div>
+        <div class="skill"><p>CSS</p><span class="tooltip">90%</span><div class="bar"><span style="width:90%"></span></div></div>
+        <div class="skill"><p>JavaScript</p><span class="tooltip">85%</span><div class="bar"><span style="width:85%"></span></div></div>
+        <div class="skill"><p>Flexbox</p><span class="tooltip">90%</span><div class="bar"><span style="width:90%"></span></div></div>
     </div>
+</section>
 
-    <!-- About -->
-    <div class="section">
-        <h2>About Me</h2>
-        <p>Mujhe web designing pasand hai aur main pro banna chahta hoon</p>
+<!-- Portfolio -->
+<section class="portfolio" id="portfolio">
+    <h2>Portfolio</h2>
+    <div class="projects">
+        <div class="project-card">Project 1</div>
+        <div class="project-card">Project 2</div>
+        <div class="project-card">Project 3</div>
+        <div class="project-card">Project 4</div>
     </div>
+</section>
 
-    <!-- Skills -->
-    <div class="section">
-        <h2>My Skills</h2>
-        <div class="flex">
-            <div class="card">HTML</div>
-            <div class="card">CSS</div>
-            <div class="card">Flexbox</div>
-            <div class="card">JavaScript</div>
-        </div>
-    </div>
+<!-- Contact -->
+<section class="contact" id="contact">
+    <h2>Contact Me</h2>
+    <p>Email: nabilp256@gmail.com</p>
+    <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
 
-    <!-- Contact -->
-    <div class="section">
-        <h2>Contact Me</h2>
-        <p>Email: nabil@email.com</p>
-    </div>
+<!-- Scripts -->
+<script>
+// Hire Me alert
+document.getElementById("hireBtn").onclick = function(){alert("Thank you for visiting my website 😎🔥");};
 
-    <!-- JavaScript -->
-    <script>
-    document.getElementById("hireBtn").onclick = function() {
-        alert("Thank you for visiting my website 😎🔥");
+// Animate skill bars & fade-in sections
+const sections = document.querySelectorAll('.about, .skills, .portfolio, .contact');
+window.addEventListener('scroll', ()=>{
+    const trigger = window.innerHeight * 0.85;
+    sections.forEach(section => {
+        const top = section.getBoundingClientRect().top;
+        if(top < trigger){section.style.opacity = 1;}
+    });
+});
+
+// Dark / Light Mode Toggle
+const toggle = document.getElementById('modeToggle');
+toggle.addEventListener('click', ()=>{
+    document.body.classList.toggle('light');
+    toggle.textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
+});
+
+// Hero typing animation
+const heroText = document.getElementById('heroText');
+const message = "I am Nabil 🔥 Future Web Designer 💻";
+let index = 0;
+function typeHero(){
+    if(index < message.length){
+        heroText.innerHTML += message.charAt(index);
+        index++;
+        setTimeout(typeHero,100);
     }
-    </script>
+}
+typeHero();
+
+// Mouse-follow neon particles
+const body = document.body;
+const colors = ['#ff0099','#0ab7ff','#ffff00','#ff00ff','#00ffff'];
+body.addEventListener('mousemove', e => {
+    const sparkle = document.createElement('div');
+    sparkle.style.position = 'absolute';
+    sparkle.style.width = '8px';
+    sparkle.style.height = '8px';
+    sparkle.style.borderRadius = '50%';
+    sparkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+    sparkle.style.left = e.pageX + 'px';
+    sparkle.style.top = e.pageY + 'px';
+    sparkle.style.pointerEvents = 'none';
+    sparkle.style.opacity = 1;
+    sparkle.style.zIndex = 9999;
+    body.appendChild(sparkle);
+    
+    let alpha = 1;
+    let size = 8;
+    const animate = setInterval(() => {
+        alpha -= 0.05;
+        size += 1;
+        sparkle.style.opacity = alpha;
+        sparkle.style.width = size + 'px';
+        sparkle.style.height = size + 'px';
+        if(alpha <= 0){sparkle.remove(); clearInterval(animate);}
+    }, 16);
+});
+</script>
 
 </body>
 </html>
